@@ -22,7 +22,7 @@
           <div class="current-weather col-xs-12 col-lg-4">
             <div class="temperature">
               <span class="temperature-number">
-                {{currentTemperature}}
+                {{currentWeather.currentTemp}}
               </span>
               <span class="temperature-degree">
                 &deg;
@@ -59,13 +59,13 @@
             </div>
             <div class="current-weather-details">
               <span class="low-temp">
-                {{currentTemperatureMin}}&deg;
+                {{currentWeather.averageTempMin}}&deg;
               </span>
-              <span class="separator">
+              <span class="temp-separator">
                 /
               </span>
               <span class="high-temp">
-                {{currentTemperatureMax}}&deg;
+                {{currentWeather.averageTempMax}}&deg;
               </span>
             </div>
           </div>
