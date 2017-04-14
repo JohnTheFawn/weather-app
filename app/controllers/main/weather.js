@@ -183,7 +183,6 @@ export default Ember.Controller.extend({
             averageTemp    += forecast.temp;
             averageTempMax += forecast.tempMax;
             averageTempMin += forecast.tempMin;
-            console.log(forecast.tempMax + ' - ' + forecast.tempMin);
           }
           averageTemp    = Math.round(averageTemp / j);
           averageTempMax = Math.round(averageTempMax / j);
@@ -194,8 +193,6 @@ export default Ember.Controller.extend({
           weatherObject.averageTempMin = averageTempMin;
           weatherObject.currentTemp = Math.round(weatherObject.forecasts[0].temp);
           weatherObject.date = weatherObject.forecasts[0].date;
-
-          console.log(weatherObject);
         }
 
 
