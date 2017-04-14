@@ -2,8 +2,7 @@
   <div class="weather-card-day">
     {{format-date-day-of-week weatherObject.date}}
   </div>
-  <div class="weather-card-icon weather-icon-cloudy">
-  </div>
+  {{weather-icon weatherId=weatherObject.weatherId}}
   <div class="weather-card-temperature">
     {{weatherObject.averageTemp}}&deg;
   </div>

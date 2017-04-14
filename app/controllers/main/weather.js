@@ -64,64 +64,6 @@ export default Ember.Controller.extend({
   /**
     *Get the current weather and set variables.
     *@param {float} latitude The latitude to look up.
-    *@param {float} longitude THe longitude to look up.
-    *@param {function} callback Callback function, returns success and weather.
-  **/
-  getCurrentWeather: function(latitude, longitude, callback){
-    var me = this;
-    var weatherUrl = 'http://api.openweathermap.org/data/2.5/weather';
-    weatherUrl += '?lat=' + latitude;
-    weatherUrl += '&lon=' + longitude;
-    weatherUrl += '&units=imperial';
-    weatherUrl += '&appid=' + ENV.APP.openWeatherMapKey;
-
-    $.ajax({
-      url: weatherUrl,
-      success: function(response){
-        console.log(response);
-        me.set('currentTemperature', Math.floor(response.main.temp));
-        me.set('currentTemperatureMin', Math.floor(response.main.temp_min));
-        me.set('currentTemperatureMax', Math.floor(response.main.temp_max));
-
-        var currentWeather = me.get('currentWeather');
-        for(var i in currentWeather){
-          currentWeather[i] = false;
-        }
-        me.set('currentWeather', currentWeather);
-
-        if(200 <= response.weather[0].id && response.weather[0].id <= 299){
-          me.set('currentWeather.thunderstorm', true);
-        }
-        else if(300 <= response.weather[0].id && response.weather[0].id <= 399){
-          me.set('currentWeather.drizzle', true);
-        }
-        else if(500 <= response.weather[0].id && response.weather[0].id <= 599){
-          me.set('currentWeather.rain', true);
-        }
-        else if(600 <= response.weather[0].id && response.weather[0].id <= 699){
-          me.set('currentWeather.snow', true);
-        }
-        else if(response.weather[0].id === 800){
-          me.set('currentWeather.sun', true);
-        }
-        else if(801 <= response.weather[0].id && response.weather[0].id <= 809){
-          me.set('currentWeather.clouds', true);
-        }
-        else if(response.weather[0].id === 905 || response.weather[0].id === 957){
-          me.set('currentWeather.wind', true);
-        }
-        me.set('currentWeatherDescription', response.description);
-
-        if(callback){
-          callback(true, currentWeather);
-        }
-      }
-    });
-  },
-
-  /**
-    *Get the current weather and set variables.
-    *@param {float} latitude The latitude to look up.
     *@param {float} longitude The longitude to look up.
     *@param {function} callback Callback function, returns success and an array
     *                           of weather objects.
@@ -152,6 +94,7 @@ export default Ember.Controller.extend({
             cloudPercentage: weather.clouds.all,
             date: weatherDate,
             rain: 0,
+            weatherId: weather.weather[0].id,
             wind: weather.wind
           }
 
@@ -191,8 +134,10 @@ export default Ember.Controller.extend({
           weatherObject.averageTemp    = averageTemp;
           weatherObject.averageTempMax = averageTempMax;
           weatherObject.averageTempMin = averageTempMin;
-          weatherObject.currentTemp = Math.round(weatherObject.forecasts[0].temp);
+          weatherObject.currentTemp    = Math.round(weatherObject.forecasts[0].temp);
+          
           weatherObject.date = weatherObject.forecasts[0].date;
+          weatherObject.weatherId = weatherObject.forecasts[0].weatherId;
         }
 
 
