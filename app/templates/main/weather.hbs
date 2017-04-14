@@ -1,0 +1,79 @@
+<div class="container-fluid" style="padding: 0px;">
+  <div class="main-container">
+    <div class="picture-area">
+      <div class="current-location">
+        {{locationCity}}
+        <span class="current-location-state">
+          , {{locationState}}
+        </span>
+      </div>
+      <div class="current-time">
+        {{format-time currentDate}}
+        <span class="current-time-detail">
+          {{format-time-suffix currentDate}}
+        </span>
+      </div>
+    </div>
+    <div class="weather-area">
+      <div class="weather-area-picture">
+      </div>
+      <div class="weather-area-content">
+        <div class="row" style="height: 100%;">
+          <div class="current-weather col-xs-12 col-lg-4">
+            <div class="temperature">
+              <span class="temperature-number">
+                {{currentTemperature}}
+              </span>
+              <span class="temperature-degree">
+                &deg;
+              </span>
+            </div>
+            {{#if currentWeather.thunderstorm}}
+              <div class="weather-icon weather-icon-thunderstorm">
+              </div>
+            {{else if currentWeather.drizzle}}
+              <div class="weather-icon weather-icon-rain">
+              </div>
+            {{else if currentWeather.rain}}
+              <div class="weather-icon weather-icon-rain">
+              </div>
+            {{else if currentWeather.snow}}
+              <div class="weather-icon weather-icon-snow">
+              </div>
+            {{else if currentWeather.sun}}
+              <div class="weather-icon weather-icon-sun">
+              </div>
+            {{else if currentWeather.clouds}}
+              <div class="weather-icon weather-icon-cloudy">
+              </div>
+            {{else if currentWeather.wind}}
+              <div class="weather-icon weather-icon-wind">
+              </div>
+            {{else}}
+              <div class="weather-icon weather-icon-sun">
+              </div>
+            {{/if}}
+            <br>
+            <div class="current-date">
+              {{format-date-month currentDate}} {{format-date-day-ending currentDate}}
+            </div>
+            <div class="current-weather-details">
+              <span class="low-temp">
+                {{currentTemperatureMin}}&deg;
+              </span>
+              <span class="separator">
+                /
+              </span>
+              <span class="high-temp">
+                {{currentTemperatureMax}}&deg;
+              </span>
+            </div>
+          </div>
+          {{#each weathers as |weatherObject|}}
+            {{weather-card weatherObject=weatherObject}}
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

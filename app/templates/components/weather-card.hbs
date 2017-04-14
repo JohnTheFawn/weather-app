@@ -1,0 +1,12 @@
+<div class="weather-card col-xs-3 col-lg-2">
+  <div class="weather-card-day">
+    {{format-date-day-of-week weatherObject.date}}
+  </div>
+  <div class="weather-card-icon weather-icon-cloudy">
+  </div>
+  <div class="weather-card-temperature">
+    {{#if weatherObject.temperature}}
+      {{weatherObject.temperature}}&deg;
+    {{/if}}
+  </div>
+</div>

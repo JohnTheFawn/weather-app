@@ -4,6 +4,13 @@ var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
+    outputPaths: {
+      app: {
+        css: {
+          'app': '/assets/weather-app.css'
+        }
+      }
+    }
     // Add options here
   });
 
@@ -20,5 +27,11 @@ module.exports = function(defaults) {
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
 
+  //Bootstrap
+  //http://getbootstrap.com/css/
+  app.import('bower_components/bootstrap/dist/js/bootstrap.js');
+  app.import('bower_components/bootstrap/dist/css/bootstrap.css');
+
   return app.toTree();
+
 };

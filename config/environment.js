@@ -14,8 +14,8 @@ module.exports = function(environment) {
     },
 
     APP: {
-      // Here you can pass flags/options to your application instance
-      // when it is created
+      googleKey: 'AIzaSyBrZlgrOTHy6vGIwQ19xANWa92AO40JHMI',
+      openWeatherMapKey: 'f681c0cbbc732f9028667a2fdf706846'
     }
   };
 
