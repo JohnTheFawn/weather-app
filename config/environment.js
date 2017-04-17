@@ -39,7 +39,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-    ENV.baseURL = '/';
+    ENV.locationType = 'hash';
     ENV.rootURL = '/weather-app/';
   }
 
