@@ -6,7 +6,6 @@ export default Ember.Controller.extend({
   locationCity: 'Red Hook',
   locationState: 'NY',
 
-
   currentDate: new Date(),
 
   currentWeather: {},
@@ -18,6 +17,7 @@ export default Ember.Controller.extend({
   totalDays: 4,
 
   actions: {
+    //Gets called asap to set up the current location, time, and weather.
     setupMethod: function(){
       var me = this;
       var weathers = this.get('weathers');
@@ -28,14 +28,22 @@ export default Ember.Controller.extend({
       }, 60000);
 
       navigator.geolocation.getCurrentPosition(function(res){
-        console.log(res.coords.latitude + ', ' + res.coords.longitude);
 
         //Get current weather
+        //forecast doesn't always return today ¯\_(ツ)_/¯
+        me.getCurrentWeather(
+          res.coords.latitude,
+          res.coords.longitude,
+          function(success, weather){
+            me.set('currentWeather', weather);
+          }
+        )
+
+        //Get forecast weather
         me.getForecast(
           res.coords.latitude,
           res.coords.longitude,
           function(success, weather){
-            me.set('currentWeather', weather[0]);
             var weathers = me.get('weathers');
             var totalDays = me.get('totalDays');
             for(var i = 1; i < weather.length; i++){
@@ -43,7 +51,6 @@ export default Ember.Controller.extend({
                 weathers.pushObject(weather[i]);
               }
             }
-            console.log(weathers);
           }
         );
 
@@ -59,10 +66,36 @@ export default Ember.Controller.extend({
 
       });
     }
+
   },
 
   /**
-    *Get the current weather and set variables.
+    *Get the current weather.
+    *@param {float} latitude The latitude to look up.
+    *@param {float} longitude The longitude to look up.
+    *@param {function} callback Callback function, returns a weather object.
+  **/
+  getCurrentWeather: function(latitude, longitude, callback){
+    var me = this;
+    var weatherUrl = 'http://api.openweathermap.org/data/2.5/weather';
+    weatherUrl += '?lat=' + latitude;
+    weatherUrl += '&lon=' + longitude;
+    weatherUrl += '&units=imperial';
+    weatherUrl += '&appid=' + ENV.APP.openWeatherMapKey;
+
+    $.ajax({
+      url: weatherUrl,
+      success: function(response){
+        var weatherObj = me.parseWeather(response);
+        if(callback){
+          callback(true, weatherObj);
+        }
+      }
+    });
+  },
+
+  /**
+    *Get the forecast.
     *@param {float} latitude The latitude to look up.
     *@param {float} longitude The longitude to look up.
     *@param {function} callback Callback function, returns success and an array
@@ -79,37 +112,21 @@ export default Ember.Controller.extend({
     $.ajax({
       url: weatherUrl,
       success: function(response){
-        console.log(response);
         var weatherObjects = {};
         //Create weather objects and group by day
         for(var i = 0; i < response.list.length; i++){
           var weather = response.list[i];
-          var weatherDate = new Date(weather.dt_txt);
 
           //Create weather object to make things a bit easier
-          var weatherObj = {
-            temp: weather.main.temp,
-            tempMax: weather.main.temp_max,
-            tempMin: weather.main.temp_min,
-            cloudPercentage: weather.clouds.all,
-            date: weatherDate,
-            rain: 0,
-            weatherId: weather.weather[0].id,
-            wind: weather.wind
-          }
+          var weatherObj = me.parseWeather(weather);
 
-          //Rain isn't always returned if it isn't going to rain
-          if(weather.rain){
-            weatherObj.rain = weather.rain['3h'];
-          }
-
-          //Group by the day
-          if(!weatherObjects[weatherDate.getDate()]){
-            weatherObjects[weatherDate.getDate()] = {forecasts: []};
+          //Group by the day and exclude
+          if(!weatherObjects[weatherObj.date.getDate()]){
+            weatherObjects[weatherObj.date.getDate()] = {forecasts: []};
           }
 
           //Push into the forecasts array
-          var weatherObject = weatherObjects[weatherDate.getDate()];
+          var weatherObject = weatherObjects[weatherObj.date.getDate()];
           weatherObject.forecasts.push(weatherObj);
         }
 
@@ -135,7 +152,7 @@ export default Ember.Controller.extend({
           weatherObject.averageTempMax = averageTempMax;
           weatherObject.averageTempMin = averageTempMin;
           weatherObject.currentTemp    = Math.round(weatherObject.forecasts[0].temp);
-          
+
           weatherObject.date = weatherObject.forecasts[0].date;
           weatherObject.weatherId = weatherObject.forecasts[0].weatherId;
         }
@@ -198,7 +215,36 @@ export default Ember.Controller.extend({
     });
   },
 
+  //Would probably be better to put this into a model or a serializer somewhere
+  //so we can utilize actual data objects of the framework.
+  /**
+    *Parse a weather response from the weather api into something a bit nicer
+    *for what we are using it for.
+    *@param {object} weatherObject A weather object from an api call.
+    *@return {object} A parsed weather object.
+  **/
   parseWeather: function(weatherObject){
 
+    var weatherDate = new Date();
+    if(weatherObject.dt_txt){
+      weatherDate = new Date(weatherObject.dt_txt);
+    }
+    var weather = {
+      temp: Math.round(weatherObject.main.temp),
+      tempMax: Math.round(weatherObject.main.temp_max),
+      tempMin: Math.round(weatherObject.main.temp_min),
+      cloudPercentage: weatherObject.clouds.all,
+      date: weatherDate,
+      rain: 0,
+      weatherId: weatherObject.weather[0].id,
+      wind: weatherObject.wind
+    }
+
+    //Rain isn't always returned if it isn't going to rain
+    if(weatherObject.rain){
+      weather.rain = weatherObject.rain['3h'];
+    }
+
+    return weather;
   }
 });

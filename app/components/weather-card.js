@@ -4,7 +4,11 @@ export default Ember.Component.extend({
   tagName: '',
   weatherObject: null,
 
-  didInsertElement: function(){
-    this._super();
-  },
+  actions: {
+    showBreakdown: function(){
+      var weatherObject = this.get('weatherObject');
+      console.log(weatherObject);
+      $('#weather-card-' + weatherObject.date.getDate() + '-modal').modal('show');
+    }
+  }
 });

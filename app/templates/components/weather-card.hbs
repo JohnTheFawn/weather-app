@@ -1,9 +1,73 @@
-<div class="weather-card col-xs-3 col-lg-2">
+<div class="weather-card col-xs-3 col-lg-2" {{action "showBreakdown"}} style="cursor: pointer;">
   <div class="weather-card-day">
     {{format-date-day-of-week weatherObject.date}}
   </div>
   {{weather-icon weatherId=weatherObject.weatherId}}
   <div class="weather-card-temperature">
     {{weatherObject.averageTemp}}&deg;
+  </div>
+</div>
+
+<div class="modal fade" id="weather-card-{{format-date-day weatherObject.date}}-modal"tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{{format-date-day-of-week weatherObject.date}}'s Forecast</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>
+                Time
+              </th>
+              <th>
+                Temp.
+              </th>
+              <th>
+                Cloud Cover
+              </th>
+              <th>
+                Rain
+              </th>
+              <th>
+                Wind
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each weatherObject.forecasts as |forecast|}}
+              <tr>
+                <td>
+                  {{format-time forecast.date}} {{format-time-suffix forecast.date}}
+                </td>
+                <td>
+                  {{forecast.temp}}&deg;
+                </td>
+                <td>
+                  {{forecast.cloudPercentage}}%
+                </td>
+                <td>
+                  {{#if forecast.rain}}
+                    {{forecast.rain}}"
+                  {{else}}
+                    0"
+                  {{/if}}
+                </td>
+                <td>
+                  {{#if forecast.wind}}
+                    {{forecast.wind.speed}} mph
+                  {{/if}}
+                </td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
   </div>
 </div>
