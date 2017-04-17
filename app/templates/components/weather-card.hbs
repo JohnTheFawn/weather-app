@@ -16,7 +16,7 @@
         <h4 class="modal-title">{{format-date-day-of-week weatherObject.date}}'s Forecast</h4>
       </div>
       <div class="modal-body">
-        <table class="table">
+        <table class="table table-hover">
           <thead>
             <tr>
               <th>
@@ -27,6 +27,9 @@
               </th>
               <th>
                 Cloud Cover
+              </th>
+              <th>
+                Humidity
               </th>
               <th>
                 Rain
@@ -49,17 +52,20 @@
                   {{forecast.cloudPercentage}}%
                 </td>
                 <td>
-                  {{#if forecast.rain}}
-                    {{forecast.rain}}"
-                  {{else}}
-                    0"
-                  {{/if}}
+                  {{forecast.humidity}}%
                 </td>
-                <td>
-                  {{#if forecast.wind}}
+                <td title="{{forecast.rain}} millimeters">
+                  {{forecast.rain}} mm.
+                </td>
+                {{#if forecast.wind}}
+                  <td title="{{convert-degrees-to-cardinal-friendly forecast.windDirection}} at {{forecast.wind.speed}} mph">
+                    {{convert-degrees-to-cardinal forecast.windDirection}}
                     {{forecast.wind.speed}} mph
-                  {{/if}}
-                </td>
+                  </td>
+                  {{else}}
+                  <td>
+                  </td>
+                {{/if}}
               </tr>
             {{/each}}
           </tbody>

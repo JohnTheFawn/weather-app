@@ -19,7 +19,7 @@
       </div>
       <div class="weather-area-content">
         <div class="row" style="height: 100%;">
-          <div class="current-weather col-xs-12 col-lg-4">
+          <div class="current-weather col-xs-12 col-lg-4" {{action "showBreakdown"}}>
             <div class="temperature">
               <span class="temperature-number">
                 {{currentWeather.temp}}
@@ -49,6 +49,76 @@
             {{weather-card weatherObject=weatherObject}}
           {{/each}}
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="weather-card-{{format-date-day currentWeather.date}}-modal"tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{{format-date-day-of-week currentWeather.date}}'s Forecast</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>
+                Time
+              </th>
+              <th>
+                Temp.
+              </th>
+              <th>
+                Cloud Cover
+              </th>
+              <th>
+                Humidity
+              </th>
+              <th>
+                Rain
+              </th>
+              <th>
+                Wind
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each currentWeather.forecasts as |forecast|}}
+              <tr>
+                <td>
+                  {{format-time forecast.date}} {{format-time-suffix forecast.date}}
+                </td>
+                <td>
+                  {{forecast.temp}}&deg;
+                </td>
+                <td>
+                  {{forecast.cloudPercentage}}%
+                </td>
+                <td>
+                  {{forecast.humidity}}%
+                </td>
+                <td title="{{forecast.rain}} millimeters">
+                  {{forecast.rain}} mm.
+                </td>
+                {{#if forecast.wind}}
+                  <td title="{{convert-degrees-to-cardinal-friendly forecast.windDirection}} at {{forecast.wind.speed}} mph">
+                    {{convert-degrees-to-cardinal forecast.windDirection}}
+                    {{forecast.wind.speed}} mph
+                  </td>
+                  {{else}}
+                  <td>
+                  </td>
+                {{/if}}
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

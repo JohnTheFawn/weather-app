@@ -35,6 +35,8 @@ export default Ember.Controller.extend({
           res.coords.latitude,
           res.coords.longitude,
           function(success, weather){
+            var currentWeather = me.get('currentWeather');
+            weather.forecasts = currentWeather.forecasts;
             me.set('currentWeather', weather);
           }
         )
@@ -46,7 +48,16 @@ export default Ember.Controller.extend({
           function(success, weather){
             var weathers = me.get('weathers');
             var totalDays = me.get('totalDays');
-            for(var i = 1; i < weather.length; i++){
+
+            var i = 0;
+            var todaysDate = new Date();
+            if(weather[0].date.getDate() === todaysDate.getDate()){
+              var currentWeather = me.get('currentWeather');
+              currentWeather.forecasts = weather[0].forecasts;
+              me.set('currentWeather', currentWeather);
+              i++;
+            }
+            for(i; i < weather.length; i++){
               if(i <= totalDays){
                 weathers.pushObject(weather[i]);
               }
@@ -65,6 +76,15 @@ export default Ember.Controller.extend({
         );
 
       });
+    },
+
+    /**
+      *Show the breakdown for the current day
+    **/
+    showBreakdown: function(){
+      var weatherObject = this.get('currentWeather');
+      console.log(weatherObject);
+      $('#weather-card-' + weatherObject.date.getDate() + '-modal').modal('show');
     }
 
   },
@@ -235,14 +255,18 @@ export default Ember.Controller.extend({
       tempMin: Math.round(weatherObject.main.temp_min),
       cloudPercentage: weatherObject.clouds.all,
       date: weatherDate,
+      humidity: weatherObject.main.humidity,
       rain: 0,
       weatherId: weatherObject.weather[0].id,
-      wind: weatherObject.wind
+      wind: weatherObject.wind,
+      windDirection: weatherObject.wind.deg
     }
 
     //Rain isn't always returned if it isn't going to rain
     if(weatherObject.rain){
-      weather.rain = weatherObject.rain['3h'];
+      if(weatherObject.rain['3h']){
+        weather.rain = weatherObject.rain['3h'];
+      }
     }
 
     return weather;
