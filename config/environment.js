@@ -37,9 +37,9 @@ module.exports = function(environment) {
 
     ENV.APP.rootElement = '#ember-testing';
   }
-  
+
   if (environment === 'production') {
-    ENV.rootUrl = '/weather-app';
+    ENV.rootUrl = '/weather-app/';
 
   }
 

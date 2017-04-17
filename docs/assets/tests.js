@@ -33,7 +33,7 @@ define('weather-app/tests/controllers/main/weather.jshint', ['exports'], functio
   QUnit.module('JSHint | controllers/main/weather.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'controllers/main/weather.js should pass jshint.\ncontrollers/main/weather.js: line 42, col 10, Missing semicolon.\ncontrollers/main/weather.js: line 23, col 11, \'weathers\' is defined but never used.\ncontrollers/main/weather.js: line 153, col 17, \'i\' is already defined.\ncontrollers/main/weather.js: line 154, col 15, \'weatherObject\' is already defined.\ncontrollers/main/weather.js: line 181, col 17, \'i\' is already defined.\ncontrollers/main/weather.js: line 262, col 6, Missing semicolon.\n\n6 errors');
+    assert.ok(false, 'controllers/main/weather.js should pass jshint.\ncontrollers/main/weather.js: line 152, col 17, \'i\' is already defined.\ncontrollers/main/weather.js: line 153, col 15, \'weatherObject\' is already defined.\ncontrollers/main/weather.js: line 180, col 17, \'i\' is already defined.\n\n3 errors');
   });
 });
 define('weather-app/tests/helpers/convert-degrees-to-cardinal-friendly.jshint', ['exports'], function (exports) {

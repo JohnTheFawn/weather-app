@@ -70,7 +70,6 @@ define('weather-app/controllers/main/weather', ['exports', 'ember', 'weather-app
       //Gets called asap to set up the current location, time, and weather.
       setupMethod: function setupMethod() {
         var me = this;
-        var weathers = this.get('weathers');
 
         //For updating the clock
         setInterval(function () {
@@ -1969,7 +1968,7 @@ catch(err) {
 /* jshint ignore:start */
 
 if (!runningTests) {
-  require("weather-app/app")["default"].create({"googleKey":"AIzaSyBrZlgrOTHy6vGIwQ19xANWa92AO40JHMI","openWeatherMapKey":"f681c0cbbc732f9028667a2fdf706846","name":"weather-app","version":"0.0.0+31aec8ad"});
+  require("weather-app/app")["default"].create({"googleKey":"AIzaSyBrZlgrOTHy6vGIwQ19xANWa92AO40JHMI","openWeatherMapKey":"f681c0cbbc732f9028667a2fdf706846","name":"weather-app","version":"0.0.0+58d643ae"});
 }
 
 /* jshint ignore:end */

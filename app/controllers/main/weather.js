@@ -20,7 +20,6 @@ export default Ember.Controller.extend({
     //Gets called asap to set up the current location, time, and weather.
     setupMethod: function(){
       var me = this;
-      var weathers = this.get('weathers');
 
       //For updating the clock
       setInterval(function(){
@@ -39,7 +38,7 @@ export default Ember.Controller.extend({
             weather.forecasts = currentWeather.forecasts;
             me.set('currentWeather', weather);
           }
-        )
+        );
 
         //Get forecast weather
         me.getForecast(
@@ -259,7 +258,7 @@ export default Ember.Controller.extend({
       weatherId: weatherObject.weather[0].id,
       wind: weatherObject.wind,
       windDirection: weatherObject.wind.deg
-    }
+    };
 
     //Rain isn't always returned if it isn't going to rain
     if(weatherObject.rain){
