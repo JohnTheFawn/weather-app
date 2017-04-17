@@ -40,7 +40,11 @@ Make use of the many generators for code, try `ember help generate` for more det
 
 ### Deploying
 
-Still needs to be set up.
+* Add a google key to config/environment.js
+* Add a weather api key to config/environment.js
+* Specify an output path in `.ember-cli`
+* Optional: set the rootURL in config/environment.js if serving from a subdomain
+* `ember build --environment=production`
 
 ## Further Reading / Useful Links
 
