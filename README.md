@@ -1,6 +1,7 @@
 # Weather-app
 
-Not too sure what you want here, it is just a weather app.
+To check it out, click this link https://johnthefawn.github.io/weather-app/
+Sadly Open Weather Map's api is only http and not https so you need to allow unsafe scripts for it to work.
 
 ## Prerequisites
 
