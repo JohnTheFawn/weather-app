@@ -1968,7 +1968,7 @@ catch(err) {
 /* jshint ignore:start */
 
 if (!runningTests) {
-  require("weather-app/app")["default"].create({"googleKey":"AIzaSyBrZlgrOTHy6vGIwQ19xANWa92AO40JHMI","openWeatherMapKey":"f681c0cbbc732f9028667a2fdf706846","name":"weather-app","version":"0.0.0+9c9f564a"});
+  require("weather-app/app")["default"].create({"googleKey":"AIzaSyBrZlgrOTHy6vGIwQ19xANWa92AO40JHMI","openWeatherMapKey":"f681c0cbbc732f9028667a2fdf706846","name":"weather-app","version":"0.0.0+190074d7"});
 }
 
 /* jshint ignore:end */
