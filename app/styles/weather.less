@@ -1,14 +1,15 @@
 .main-container{
-  width: 100vw;
   height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+
   display: flex;
   flex-direction: column;
-  position: relative;
 }
 
+/*Start Top Section*/
 .picture-area{
   flex: 1;
-  margin: 0px;
   background-image: url('images/high_res/mohamed-nohassi-229698.jpg');
   background-repeat: no-repeat;
   background-size: cover;
@@ -25,10 +26,11 @@
   @media (min-width: @screen-large){
     text-align: left;
   }
-}
-.current-location > .current-location-state{
-  color: rgba(255, 255, 255, .6);
-  margin-left: -12px;
+
+  .current-location-state{
+    color: rgba(255, 255, 255, .6);
+    margin-left: -12px;
+  }
 }
 
 .current-time{
@@ -46,12 +48,20 @@
   color: rgba(255, 255, 255, .6);
   margin-left: -12px;
 }
+/*End Top Section*/
 
+/*Start Weather Section*/
 .weather-area{
-  height: 300px;
-  overflow: hidden;
+  border-top: 1px solid #757575;
+
   position: relative;
-  display: flex;
+  overflow: hidden;
+}
+
+.weather-area-content{
+  background-color: rgba(255, 255, 255, .2);
+  color: white;
+  margin: 0px;
 }
 
 .weather-area-picture{
@@ -68,29 +78,23 @@
   filter: blur(40px);
   -webkit-filter: blur(40px);
   position: absolute;
-}
-
-.weather-area-content{
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  background-color: rgba(255, 255, 255, .2);
-  border-top: 1px solid #757575;
-
-  color: white;
+  z-index: -1;
 }
 
 .current-weather{
   height: 100%;
   text-align: center;
-  padding-top: 50px;
+  padding: 20px 0px;
+  @media (min-width: @screen-large){
+    padding-top: 50px;
+  }
 }
 
-.current-weather > .temperature{
+.temperature{
   display: inline-block;
   vertical-align: middle;
   font-weight: 300;
-  width: 250px;
+  width: 220px;
 }
 
 .temperature-number{
@@ -105,58 +109,20 @@
   line-height: 120%;
 }
 
-.weather-icon{
-  display: inline-block;
-  height: 144px;
-  width: 144px;
-  vertical-align: middle;
-
-  margin-top: -8px;
-
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.weather-icon-sun{
-  background-image: url('icons/clouds/001lighticons-02.png');
-}
-
-.weather-icon-cloudy{
-  background-image: url('icons/clouds/001lighticons-14.png');
-}
-
-.weather-icon-rain{
-  background-image: url('icons/clouds/001lighticons-18.png');
-}
-
-.weather-icon-snow{
-  background-image: url('icons/clouds/001lighticons-23.png');
-}
-
-.weather-icon-wind{
-  background-image: url('icons/clouds/001lighticons-06.png');
-}
-
 .current-date{
-  width: 250px;
+  width: 220px;
   vertical-align: middle;
   display: inline-block;
-  padding-right: 35px;
+  padding-right: 50px;
   font-size: 18px;
   font-family: 'Raleway', sans-serif;
 }
 
 .current-weather-details{
-  width: 144px;
+  width: 124px;
   vertical-align: middle;
   display: inline-block;
   font-size: 18px;
-}
-
-.temp-separator{
-  color: #adadad;
-  margin: 0px 8px;
 }
 
 .weather-card{
@@ -164,26 +130,51 @@
   height: 100%;
   text-align: center;
   font-size: 22px;
-  padding: 50px 0px;
+
+  padding: 10px 0px;
+  @media (min-width: @screen-large){
+    padding: 50px 0px;
+  }
+
+  .weather-icon{
+    height: 95px;
+    width: 95px;
+    margin: 8px auto;
+
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+  }
+
+  border-top: 1px solid #757575;
+  @media (min-width: @screen-large){
+    border-top: 0px;
+  }
 }
 
 .weather-card-day{
   margin: 0px 35px;
   border-bottom: 1px solid rgba(255, 255, 255, .5);
   font-family: 'Raleway', sans-serif;
+
+  display: none;
+  @media (min-width: @screen-medium){
+    display: block;
+  }
 }
+.weather-card-date{
+  margin: 0px 35px;
+  border-bottom: 1px solid rgba(255, 255, 255, .5);
+  font-family: 'Raleway', sans-serif;
 
-.weather-card > .weather-icon{
-  height: 95px;
-  width: 95px;
-  margin: 8px auto;
-
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
+  display: block;
+  @media (min-width: @screen-medium){
+    display: none;
+  }
 }
 
 .weather-card-temperature{
   margin-right: -9px;
   font-size: 18px;
 }
+/*End Weather Section*/
