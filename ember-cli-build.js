@@ -32,6 +32,10 @@ module.exports = function(defaults) {
   app.import('bower_components/bootstrap/dist/js/bootstrap.js');
   app.import('bower_components/bootstrap/dist/css/bootstrap.css');
 
+  //Chart.js
+  //http://www.chartjs.org/
+  app.import('bower_components/Chart.js/dist/Chart.js');
+
   return app.toTree();
 
 };
