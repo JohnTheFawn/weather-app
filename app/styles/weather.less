@@ -20,6 +20,11 @@
   color: white;
   font-family: 'Raleway', sans-serif;
   padding-left: 20px;
+  text-align: center;
+
+  @media (min-width: @screen-large){
+    text-align: left;
+  }
 }
 .current-location > .current-location-state{
   color: rgba(255, 255, 255, .6);
@@ -27,13 +32,15 @@
 }
 
 .current-time{
-  position: absolute;
-  top: 0px;
-  right: 0px;
   font-size: 60px;
   color: white;
   font-family: 'Raleway', sans-serif;
   padding-right: 20px;
+  text-align: center;
+
+  @media (min-width: @screen-large){
+    text-align: right;
+  }
 }
 .current-time-detail{
   color: rgba(255, 255, 255, .6);

@@ -1,13 +1,13 @@
 <div class="container-fluid" style="padding: 0px;">
   <div class="main-container">
-    <div class="picture-area">
-      <div class="current-location">
+    <div class="picture-area row">
+      <div class="current-location col-xs-12 col-lg-8">
         {{locationCity}}
         <span class="current-location-state">
           , {{locationState}}
         </span>
       </div>
-      <div class="current-time">
+      <div class="current-time col-xs-12 col-lg-4">
         {{format-time currentDate}}
         <span class="current-time-detail">
           {{format-time-suffix currentDate}}
