@@ -7,7 +7,6 @@ export default Ember.Component.extend({
   actions: {
     showBreakdown: function(){
       var weatherObject = this.get('weatherObject');
-      console.log(weatherObject);
       $('#weather-card-' + weatherObject.date.getDate() + '-modal').modal('show');
     }
   }

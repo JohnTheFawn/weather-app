@@ -83,7 +83,6 @@ export default Ember.Controller.extend({
     **/
     showBreakdown: function(){
       var weatherObject = this.get('currentWeather');
-      console.log(weatherObject);
       $('#weather-card-' + weatherObject.date.getDate() + '-modal').modal('show');
     }
 
