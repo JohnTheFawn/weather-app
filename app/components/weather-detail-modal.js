@@ -55,7 +55,6 @@ export default Ember.Component.extend({
 
   createChart: function(){
     var weatherObject = this.get('weatherObject');
-    console.log(weatherObject);
     var labels = [];
     var dataPoints = [];
     for(var i = 0; i < weatherObject.forecasts.length; i++){
