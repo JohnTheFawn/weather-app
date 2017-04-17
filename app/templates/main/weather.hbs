@@ -15,40 +15,42 @@
       </div>
     </div>
     <div class="weather-area">
-      <div class="weather-area-picture">
-      </div>
-      <div class="weather-area-content">
-        <div class="row" style="height: 100%;">
-          <div class="current-weather col-xs-12 col-lg-4" {{action "showBreakdown"}} style="cursor: pointer;">
-            <div class="temperature">
-              <span class="temperature-number">
-                {{currentWeather.temp}}
-              </span>
-              <span class="temperature-degree">
-                &deg;
-              </span>
-            </div>
-            {{weather-icon weatherId=currentWeather.weatherId}}
-            <br>
-            <div class="current-date">
-              {{format-date-month currentDate}} {{format-date-day-ending currentDate}}
-            </div>
-            <div class="current-weather-details">
-              <span class="low-temp">
-                {{currentWeather.tempMin}}&deg;
-              </span>
-              <span class="temp-separator">
-                /
-              </span>
-              <span class="high-temp">
-                {{currentWeather.tempMax}}&deg;
-              </span>
-            </div>
+      <div class="weather-area-content row">
+        <div class="current-weather col-xs-12 col-lg-4" {{action "showBreakdown"}} style="cursor: pointer;">
+          <div class="temperature">
+            <span class="temperature-number">
+              {{currentWeather.temp}}
+            </span>
+            <span class="temperature-degree">
+              &deg;
+            </span>
           </div>
-          {{#each weathers as |weatherObject|}}
-            {{weather-card weatherObject=weatherObject}}
-          {{/each}}
+          {{weather-icon weatherId=currentWeather.weatherId}}
+          <br>
+          <div class="current-date">
+            {{format-date-month currentDate}} {{format-date-day-ending currentDate}}
+          </div>
+          <div class="current-weather-details">
+            <span class="low-temp">
+              {{currentWeather.tempMin}}&deg;
+            </span>
+            <span class="temp-separator">
+              /
+            </span>
+            <span class="high-temp">
+              {{currentWeather.tempMax}}&deg;
+            </span>
+          </div>
         </div>
+        <div class="col-xs-12 col-lg-8">
+          <div class="row">
+            {{#each weathers as |weatherObject|}}
+              {{weather-card weatherObject=weatherObject}}
+            {{/each}}
+          </div>
+        </div>
+      </div>
+      <div class="weather-area-picture">
       </div>
     </div>
   </div>

@@ -52,7 +52,8 @@ export default Ember.Controller.extend({
             var todaysDate = new Date();
             if(weather[0].date.getDate() === todaysDate.getDate()){
               var currentWeather = me.get('currentWeather');
-              currentWeather.forecasts = weather[0].forecasts;
+              console.log(currentWeather);
+              Ember.set(currentWeather, 'forecasts', weather[0].forecasts);
               me.set('currentWeather', currentWeather);
               i++;
             }
