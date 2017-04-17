@@ -95,7 +95,7 @@ export default Ember.Controller.extend({
   **/
   getCurrentWeather: function(latitude, longitude, callback){
     var me = this;
-    var weatherUrl = 'http://api.openweathermap.org/data/2.5/weather';
+    var weatherUrl = 'https://api.openweathermap.org/data/2.5/weather';
     weatherUrl += '?lat=' + latitude;
     weatherUrl += '&lon=' + longitude;
     weatherUrl += '&units=imperial';
@@ -121,7 +121,7 @@ export default Ember.Controller.extend({
   **/
   getForecast: function(latitude, longitude, callback){
     var me = this;
-    var weatherUrl = 'http://api.openweathermap.org/data/2.5/forecast';
+    var weatherUrl = 'https://api.openweathermap.org/data/2.5/forecast';
     weatherUrl += '?lat=' + latitude;
     weatherUrl += '&lon=' + longitude;
     weatherUrl += '&units=imperial';
