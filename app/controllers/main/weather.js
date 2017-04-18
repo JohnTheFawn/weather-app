@@ -27,9 +27,13 @@ export default Ember.Controller.extend({
       //For updating the clock
       setInterval(function(){
         me.set('currentDate', new Date());
-      }, 60000);
+      }, 10000);
 
-      if(navigator.geolocation){
+      setInterval(function(){
+        me.loadWeather(me.get('latitude'), me.get('longitude'));
+      }, 300000);
+
+      if(navigator.geolocation && (window.location.protocol === 'https:' || window.location.hostname === 'localhost')){
         navigator.geolocation.getCurrentPosition(function(res){
           me.set('latitude', res.coords.latitude);
           me.set('longitude', res.coords.longitude);
