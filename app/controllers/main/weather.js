@@ -14,7 +14,6 @@ export default Ember.Controller.extend({
   currentTemperatureMax: 0,
 
   weathers: [],
-  totalDays: 4,
 
   actions: {
     //Gets called asap to set up the current location, time, and weather.
@@ -57,7 +56,7 @@ export default Ember.Controller.extend({
               i++;
             }
             for(i; i < weather.length; i++){
-              if(i <= totalDays){
+              if(weathers.length <= 4){
                 weathers.pushObject(weather[i]);
               }
             }
@@ -263,7 +262,12 @@ export default Ember.Controller.extend({
     //Rain isn't always returned if it isn't going to rain
     if(weatherObject.rain){
       if(weatherObject.rain['3h']){
-        weather.rain = weatherObject.rain['3h'];
+        weather.rain = weatherObject.rain['3h'].toFixed(2);
+      }
+    }
+    if(weatherObject.wind){
+      if(weatherObject.wind.speed){
+        weatherObject.wind.speed = Math.round(weatherObject.wind.speed);
       }
     }
 
