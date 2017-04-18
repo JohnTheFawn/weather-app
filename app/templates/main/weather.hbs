@@ -1,7 +1,7 @@
 <div class="container-fluid" style="padding: 0px;">
   <div class="main-container">
     <div class="picture-area row">
-      <div class="current-location col-xs-12 col-lg-8">
+      <div class="current-location col-xs-12 col-lg-8" {{action "promptLocation"}} style="cursor: pointer;">
         {{locationCity}}
         <span class="current-location-state">
           , {{locationState}}
@@ -57,3 +57,23 @@
 </div>
 
 {{weather-detail-modal weatherObject=currentWeather}}
+
+<div class="modal fade" id="change-location-modal"tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Enter a New Location</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="locationInput">Location</label>
+          {{input value=newLocation action="lookupLocation" class="form-control" id="locationInput" placeholder="Enter a new Location"}}
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" {{action "lookupLocation"}}>Okay</button>
+      </div>
+    </div>
+  </div>
+</div>

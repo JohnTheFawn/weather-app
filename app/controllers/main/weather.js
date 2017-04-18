@@ -5,6 +5,10 @@ export default Ember.Controller.extend({
 
   locationCity: 'Red Hook',
   locationState: 'NY',
+  newLocation: '',
+
+  latitude: 41.9951225,
+  longitude: -73.8753898,
 
   currentDate: new Date(),
 
@@ -25,55 +29,16 @@ export default Ember.Controller.extend({
         me.set('currentDate', new Date());
       }, 60000);
 
-      navigator.geolocation.getCurrentPosition(function(res){
-
-        //Get current weather
-        //forecast doesn't always return today ¯\_(ツ)_/¯
-        me.getCurrentWeather(
-          res.coords.latitude,
-          res.coords.longitude,
-          function(success, weather){
-            var currentWeather = me.get('currentWeather');
-            weather.forecasts = currentWeather.forecasts;
-            me.set('currentWeather', weather);
-          }
-        );
-
-        //Get forecast weather
-        me.getForecast(
-          res.coords.latitude,
-          res.coords.longitude,
-          function(success, weather){
-            var weathers = me.get('weathers');
-            var totalDays = me.get('totalDays');
-
-            var i = 0;
-            var todaysDate = new Date();
-            if(weather[0].date.getDate() === todaysDate.getDate()){
-              var currentWeather = me.get('currentWeather');
-              Ember.set(currentWeather, 'forecasts', weather[0].forecasts);
-              me.set('currentWeather', currentWeather);
-              i++;
-            }
-            for(i; i < weather.length; i++){
-              if(weathers.get('length') < 4){
-                weathers.pushObject(weather[i]);
-              }
-            }
-          }
-        );
-
-        //Get current location
-        me.getCurrentLocation(
-          res.coords.latitude,
-          res.coords.longitude,
-          function(city, state){
-            me.set('locationCity', city);
-            me.set('locationState', state);
-          }
-        );
-
-      });
+      if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(function(res){
+          me.set('latitude', res.coords.latitude);
+          me.set('longitude', res.coords.longitude);
+          me.loadWeather(res.coords.latitude, res.coords.longitude);
+        });
+      }
+      else{
+        me.loadWeather(me.get('latitude'), me.get('longitude'));
+      }
     },
 
     /**
@@ -82,11 +47,92 @@ export default Ember.Controller.extend({
     showBreakdown: function(){
       var weatherObject = this.get('currentWeather');
       $('#weather-card-' + weatherObject.date.getDate() + '-modal').modal('show');
+    },
+
+    /**
+      *Shows a modal to ask the user to enter a location to look up.
+    **/
+    promptLocation: function(){
+      $('#change-location-modal').modal('show');
+    },
+
+    /**
+      *Geocodes newLocation and calls loadWeather
+    **/
+    lookupLocation: function(){
+      var me = this;
+      $('#change-location-modal').modal('hide');
+      me.geocode(
+        me.get('newLocation'),
+        function(success, latitude, longitude){
+          if(success){
+            me.loadWeather(latitude, longitude);
+          }
+        }
+      );
     }
 
   },
 
+
   /**
+    *Gets weather, forecast, and current location from a latitude and longitude.
+    *Sets all the variables.
+    *@param {float} latitude The latitude to look up.
+    *@param {float} longitude The longitude to look up.
+  **/
+  loadWeather: function(latitude, longitude){
+    var me = this;
+
+    //Get current weather
+    //forecast doesn't always return today ¯\_(ツ)_/¯
+    me.getCurrentWeather(
+      latitude,
+      longitude,
+      function(success, weather){
+        var currentWeather = me.get('currentWeather');
+        weather.forecasts = currentWeather.forecasts;
+        me.set('currentWeather', weather);
+      }
+    );
+
+    //Get forecast weather
+    me.getForecast(
+      latitude,
+      longitude,
+      function(success, weather){
+        var weathers = [];
+        var totalDays = me.get('totalDays');
+
+        var i = 0;
+        var todaysDate = new Date();
+        if(weather[0].date.getDate() === todaysDate.getDate()){
+          var currentWeather = me.get('currentWeather');
+          Ember.set(currentWeather, 'forecasts', weather[0].forecasts);
+          me.set('currentWeather', currentWeather);
+          i++;
+        }
+        for(i; i < weather.length; i++){
+          if(weathers.get('length') < 4){
+            weathers.pushObject(weather[i]);
+          }
+        }
+        me.set('weathers', weathers);
+      }
+    );
+
+    //Get current location
+    me.reverseGeocode(
+      latitude,
+      longitude,
+      function(city, state){
+        me.set('locationCity', city);
+        me.set('locationState', state);
+      }
+    )
+  },
+
+      /**
     *Get the current weather.
     *@param {float} latitude The latitude to look up.
     *@param {float} longitude The longitude to look up.
@@ -187,12 +233,51 @@ export default Ember.Controller.extend({
   },
 
   /**
+    *Get the latitude and longitude of a location.
+    *@param {string} location The location to look up.
+    *@param {function} callback Callback function, returns success, latitude,
+    *                           and longitude.
+  **/
+  geocode: function(location, callback){
+    var geolocationUrl = 'https://maps.googleapis.com/maps/api/geocode/json';
+    geolocationUrl += '?address=' + location;
+    geolocationUrl += '&key=' + ENV.APP.googleKey;
+
+    $.ajax({
+      url: geolocationUrl,
+      success: function(response){
+        var latitude = null;
+        var longitude = null;
+        var success = false;
+        if(response){
+          if(response.results){
+            if(response.results[0]){
+              if(response.results[0].geometry){
+                var location = response.results[0].geometry.location;
+                if(location){
+                  success = true;
+                  latitude = location.lat;
+                  longitude = location.lng;
+                }
+              }
+            }
+          }
+        }
+
+        if(callback){
+          callback(success, latitude, longitude);
+        }
+      }
+    });
+  },
+
+  /**
     *Gets the city and state of a lat lng.
     *@param {float} latitude Latitude to look up.
     *@param {float} longitude Longitude to look up.
     *@param {function} callback Callback function, returns city and state.
   **/
-  getCurrentLocation: function(latitude, longitude, callback){
+  reverseGeocode: function(latitude, longitude, callback){
     var reverseGeolocationUrl = 'https://maps.googleapis.com/maps/api/geocode/json';
     reverseGeolocationUrl += '?latlng=' + latitude + ',' + longitude;
     reverseGeolocationUrl += '&key=' + ENV.APP.googleKey;
