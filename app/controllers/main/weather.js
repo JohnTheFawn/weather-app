@@ -56,7 +56,7 @@ export default Ember.Controller.extend({
               i++;
             }
             for(i; i < weather.length; i++){
-              if(weathers.length <= 4){
+              if(weathers.get('length') < 4){
                 weathers.pushObject(weather[i]);
               }
             }
