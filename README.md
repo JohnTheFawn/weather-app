@@ -2,8 +2,6 @@
 
 To check it out, click [here](https://johnthefawn.github.io/weather-app/)
 
-Sadly Open Weather Map's api is only http and not https so you need to allow unsafe scripts for it to work.
-
 ## Prerequisites
 
 You will need the following things properly installed on your computer.
