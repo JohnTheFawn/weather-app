@@ -1,6 +1,6 @@
 <div class="container-fluid" style="padding: 0px;">
   <div class="main-container">
-    <div class="picture-area row">
+    <div class="picture-area {{background-image-by-time null}} row">
       <div class="current-location col-xs-12 col-lg-8" {{action "promptLocation"}} style="cursor: pointer;">
         {{locationCity}}
         <span class="current-location-state">
@@ -50,7 +50,7 @@
           </div>
         </div>
       </div>
-      <div class="weather-area-picture">
+      <div class="weather-area-picture {{background-image-by-time null}}">
       </div>
     </div>
   </div>
