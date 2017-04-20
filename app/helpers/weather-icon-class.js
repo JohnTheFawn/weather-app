@@ -3,7 +3,7 @@ import Ember from 'ember';
 export function weatherIconClass(weatherId) {
   weatherId = weatherId[0];
   var weatherCls = 'weather-icon-';
-  
+
   if(200 <= weatherId && weatherId <= 299){
     weatherCls += 'thunderstorm';
   }
@@ -15,6 +15,9 @@ export function weatherIconClass(weatherId) {
   }
   else if(600 <= weatherId && weatherId <= 699){
     weatherCls += 'snow';
+  }
+  else if(weatherId === 701){
+    weatherCls += 'mist';
   }
   else if(weatherId === 800){
     weatherCls += 'sun';
