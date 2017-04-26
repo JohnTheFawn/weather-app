@@ -194,7 +194,6 @@ export default Ember.Controller.extend({
 
           //Push into the forecasts array
           var weatherObject = weatherObjects[weatherObj.date.getDate()];
-          console.log(weatherObj.date);
           weatherObject.forecasts.push(weatherObj);
         }
 
@@ -231,8 +230,6 @@ export default Ember.Controller.extend({
           weatherArray.push(weatherObjects[i]);
         }
         weatherArray.sort(function(a, b){
-          console.log(a.date, b.date);
-          console.log(a.date > b.date);
           if(a.date < b.date){
             return -1;
           }
@@ -241,7 +238,7 @@ export default Ember.Controller.extend({
           }
           return 0;
         });
-        console.log(weatherArray);
+
         if(callback){
           callback(true, weatherArray);
         }
