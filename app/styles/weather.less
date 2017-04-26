@@ -99,14 +99,20 @@
   display: inline-block;
   vertical-align: middle;
   font-weight: 300;
-  width: 220px;
+  width: 195px;
+  @media (min-width: @screen-small){
+    width: 220px;
+  }
 }
 
 .temperature-number{
-  font-size: 144px;
+  font-size: 90px;
   line-height: 100%;
   vertical-align: top;
   margin-right: -20px;
+  @media (min-width: @screen-small){
+    font-size: 144px;
+  }
 }
 .temperature-degree{
   font-size: 80px;
