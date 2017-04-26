@@ -10,7 +10,7 @@
 /*Start Top Section*/
 
 .current-location{
-  font-size: 60px;
+  font-size: 40px;
   color: white;
   font-family: 'Raleway', sans-serif;
   padding-left: 20px;
@@ -18,6 +18,13 @@
 
   @media (min-width: @screen-large){
     text-align: left;
+  }
+
+  @media (min-width: @screen-small){
+    font-size: 50px;
+  }
+  @media (min-width: @screen-large){
+    font-size: 60px;
   }
 
   .current-location-state{
@@ -35,6 +42,11 @@
 
   @media (min-width: @screen-large){
     text-align: right;
+  }
+
+  display: none;
+  @media (min-width: @screen-small){
+    display: initial;
   }
 }
 .current-time-detail{
