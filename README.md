@@ -1,6 +1,6 @@
 # Weather-app
 
-To check it out, click [here](www.weather-it.com)
+To check it out, click [here](http://www.weather-it.com)
 
 ## Prerequisites
 
