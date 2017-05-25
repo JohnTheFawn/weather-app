@@ -1,6 +1,6 @@
 # Weather-app
 
-To check it out, click [here](https://johnthefawn.github.io/weather-app/)
+To check it out, click [here](www.weather-it.com)
 
 ## Prerequisites
 
